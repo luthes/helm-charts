@@ -23,15 +23,4 @@ entries:
     urls:
     - https://github.com/luthes/helm-charts/releases/download/glob-0.1.2/glob-0.1.2.tgz
     version: 0.1.2
-  second-chart-test:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2024-09-28T21:29:45.249544346Z"
-    description: A Helm chart for Kubernetes
-    digest: 75428f33fcef05ca359945ab11027e8c2c18a2e77021235d6311baa7a0e7600b
-    name: second-chart-test
-    type: application
-    urls:
-    - https://github.com/luthes/helm-charts/releases/download/second-chart-test-0.1.0/second-chart-test-0.1.0.tgz
-    version: 0.1.0
 generated: "2024-09-28T21:29:45.249552541Z"
