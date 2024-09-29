@@ -1,0 +1,31 @@
+{{- if (.Values.ingress).enabled }}
+# https://kubernetes.io/docs/concepts/services-networking/ingress/
+# This is a test service wtih example ingress and service using Traefik with SSL
+# TODO: This is using staging, make this use Production once it's set up as a copy/paste-able example!
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{- include "glob.fullname" -}}
+  namespace: {{ include "glob.namespace" . }}
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`www.{{ .Values.applicatonName }}.local.lutherlabs.com`)
+      kind: Rule
+      services:
+        - name: {{ .Values.applicationName}}
+        - match: Host(`{{ .Values.applicationName" }}.local.lutherlabs.com`)
+          port: {{ .Values.service.port }}
+      kind: Rule
+      services:
+        - name: {{ .Values.applicationName }}
+          port: {{ .Values.service.port }}
+      middlewares:
+        - name: default-headers
+          namespace: traefik
+  tls:
+    secretName: local-lutherlabs-com-tls
+{{- end }}
