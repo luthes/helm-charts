@@ -22,7 +22,7 @@ spec:
       kind: Rule
       services:
         - name: {{ .Values.applicationName }}
-          port: {{ .Values.service.port }}
+          port: {{ index .Values.service.ports 1 "port" }}
       middlewares:
         - name: default-headers
           namespace: traefik
