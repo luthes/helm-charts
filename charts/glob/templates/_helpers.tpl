@@ -56,11 +56,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "glob.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "glob.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
+  {{- if .Values.serviceAccount.create }}
+    {{- default (include "glob.fullname" .) .Values.serviceAccount.name }}
+  {{- else }}
+    {{- default "default" .Values.serviceAccount.name }}
+  {{- end }}
 {{- end }}
 
 
@@ -69,9 +69,8 @@ Create the name of the service account to use
 {{- default .Release.Namespace .Values.namespaceOverride -}}
 {{- end -}}
 
-
 {{/* Render Templates */}}
-{{- define "glob.tplvalues.render -}}
+{{- define "glob.tplvalues.render" -}}
   {{- if typeIs "string" .value -}}
     {{- tpl .value .context}}
   {{- else }}
