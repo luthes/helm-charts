@@ -68,3 +68,13 @@ Create the name of the service account to use
 {{- define "glob.namespace" -}}
 {{- default .Release.Namespace .Values.namespaceOverride -}}
 {{- end -}}
+
+
+{{/* Render Templates */}}
+{{- define "glob.tplvalues.render -}}
+  {{- if typeIs "string" .value -}}
+    {{- tpl .value .context}}
+  {{- else }}
+    {{- tpl (.value | toYaml) .context }}
+  {{- end -}}
+{{- end -}}
