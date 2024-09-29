@@ -1,4 +1,4 @@
-{{- if (.Values.ingress).enabled }}
+{{- if (.Values.ingressRoute).enabled }}
 # https://kubernetes.io/docs/concepts/services-networking/ingress/
 # This is a test service wtih example ingress and service using Traefik with SSL
 # TODO: This is using staging, make this use Production once it's set up as a copy/paste-able example!
