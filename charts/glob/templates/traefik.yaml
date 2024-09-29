@@ -5,7 +5,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{- template "glob.name" . -}}
+  name: {{ template "glob.name" . }}
   namespace: {{ template "glob.namespace" . }}
   annotations:
     kubernetes.io/ingress.class: traefik-external
