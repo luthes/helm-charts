@@ -17,8 +17,8 @@ spec:
       kind: Rule
       services:
         - name: {{ .Values.applicationName}}
-        - match: Host(`{{ .Values.applicationName }}.local.lutherlabs.com`)
           port: {{ .Values.service.port }}
+    - match: Host(`{{ .Values.applicationName }}.local.lutherlabs.com`)
       kind: Rule
       services:
         - name: {{ .Values.applicationName }}
