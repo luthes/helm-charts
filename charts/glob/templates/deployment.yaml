@@ -109,33 +109,6 @@ spec:
       - name: {{ .Values.deployment.imagePullSecrets }}
       {{- end }}
       containers:
-        {{- if .Values.deployment.openshiftOAuthProxy.enabled }}
-      - args:
-        {{- if .Values.deployment.openshiftOAuthProxy.disableTLSArg }}
-        - --http-address=:8081
-        {{- else }}
-        - --https-address=:8443
-        {{- end }}
-        - --provider=openshift
-        - --upstream=http://localhost:{{ .Values.deployment.openshiftOAuthProxy.port }}
-        - --openshift-service-account={{ template "glob.name" . }}
-        - --tls-cert=/etc/tls/private/tls.crt
-        - --tls-key=/etc/tls/private/tls.key
-        - --cookie-secret=SECRET
-        image: {{ .Values.deployment.openshiftOAuthProxy.image | default "openshift/oauth-proxy:latest" }}
-        imagePullPolicy: IfNotPresent
-        name: oauth-proxy
-        ports:
-        {{- if .Values.deployment.openshiftOAuthProxy.disableTLSArg }}
-        - containerPort: 8081
-        {{- else }}
-        - containerPort: 8443
-        {{- end }}
-          name: proxy
-        volumeMounts:
-        - mountPath: /etc/tls/private
-          name: proxy-tls
-        {{- end }}
       - name: {{ template "glob.name" . }}
 
         {{- $image := required "Undefined image for glob.container" .Values.deployment.image.repository }}
@@ -285,29 +258,6 @@ spec:
       dnsConfig:
 {{ toYaml .Values.deployment.dnsConfig | indent 8 }}
           {{- end }}
-      {{- if or (.Values.deployment.openshiftOAuthProxy.enabled) (.Values.deployment.volumes) (and (eq .Values.persistence.enabled true) (eq .Values.persistence.mountPVC true) )}}
-      volumes:
-        {{- if .Values.deployment.openshiftOAuthProxy.enabled }}
-      - name: proxy-tls
-        secret:
-          secretName: {{ .Values.deployment.openshiftOAuthProxy.secretName }}
-        {{- end }}
-        {{- if (eq .Values.persistence.mountPVC true) }}
-      - name: {{ template "glob.name" . }}-data
-        persistentVolumeClaim:
-          {{- if .Values.persistence.name }}
-          claimName: {{ .Values.persistence.name }}
-          {{- else }}
-          claimName: {{ template "glob.name" . }}-data
-          {{- end }}
-        {{- end }}
-        {{- if .Values.deployment.volumes }}
-        {{- range $key, $value := .Values.deployment.volumes }}
-      - name: {{ $key }}
-{{ include "glob.tplvalues.render" ( dict "value" $value "context" $ ) | indent 8 }}
-        {{- end }}
-        {{- end }}
-      {{- end }}
       {{- if .Values.rbac.serviceAccount.enabled }}
       {{- if .Values.rbac.serviceAccount.name }}
       serviceAccountName: {{ .Values.rbac.serviceAccount.name }}

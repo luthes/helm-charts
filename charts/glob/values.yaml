@@ -10,7 +10,7 @@ partOfOverride: ""
 ##########################################################
 # Name of the application.
 ##########################################################
-applicationName: "application"
+applicationName: "bookstack"
 
 ##########################################################
 # Global labels
@@ -145,6 +145,21 @@ deployment:
 
   # Environment variables to be passed to the app container
   env:
+    DB_HOST:
+       value: "192.168.8.116"
+    DB_PORT:
+       value: "3306"
+    DB_USER:
+       value: "bookstack"
+    DB_PASS:
+       value: "bookstack"
+    DB_DATABASE:
+       value: "bookstack"
+    # FREQUENCY:
+    #    valueFrom:
+    #       configMapKeyRef:
+    #          name: config
+    #          key: frequency
   #  ENVIRONMENT:
   #     value: "dev"
   #  FREQUENCY:
@@ -221,9 +236,9 @@ deployment:
 
   # Image of the app container
   image:
-    repository: repository/image-name
-    tag: ''
-    digest: '' # if set to a non empty value, digest takes precedence on the tag
+    repository: lscr.io/linuxserver/bookstack
+    tag: 'latest' # TODO: Pin to a verison
+    # digest: '' # if set to a non empty value, digest takes precedence on the tag
     pullPolicy: IfNotPresent
   dnsConfig:
     # options:
@@ -249,9 +264,9 @@ deployment:
     initialDelaySeconds: 10
     # Must specify either one of the following field when enabled
     httpGet: {}
-    exec: {}
-    tcpSocket: {}
-    grpc: {}
+    # exec: {}
+    # tcpSocket: {}
+    # grpc: {}
 
   livenessProbe:
     enabled: false
@@ -277,15 +292,9 @@ deployment:
 
   #  Security Context at Container Level
   containerSecurityContext:
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
+    readOnlyRootFilesystem: false
+    runAsNonRoot: false
 
-  openshiftOAuthProxy:
-    enabled: false
-    port: 8080   # Port on which application is running inside container
-    secretName: "openshift-oauth-proxy-tls"
-    image: openshift/oauth-proxy:latest       # If you have a custom container for oauth-proxy that can be updated here
-    disableTLSArg: false # If disabled --http-address=:8081 will be used instead of --https-address=:8443 , to be used when an ingress is used for application
   # Add additional containers besides init and app containers
   additionalContainers:
   # - name: sidecar-contaner
@@ -305,9 +314,9 @@ deployment:
 
   # List of ports for the primary container
   ports:
-  #- containerPort: 8080
-  #  name: http
-  #  protocol: TCP
+  - containerPort: 6875
+    name: http
+    protocol: TCP
   #- containerPort: 8778
   #  name: jolokia
   #  protocol: TCP
@@ -357,6 +366,7 @@ persistence:
 # Service object for servicing pods
 ##########################################################
 service:
+  # TODO: Fix once replicaset is successfully starting (sans db), ingess too
   enabled: true
   additionalLabels:
     # expose: "true"
@@ -366,7 +376,6 @@ service:
     # config.xposer.stakater.com/IngressNameTemplate: '{{ "{{.Service}}-{{.Namespace}}" }}'
     # config.xposer.stakater.com/IngressURLPath: /
     # config.xposer.stakater.com/IngressURLTemplate: '{{ "{{.Service}}.{{.Namespace}}.{{.Domain}}" }}'
-    # service.alpha.openshift.io/serving-cert-secret-name: |
     #   '{{ template "application.name" . }}-tls'
     # xposer.stakater.com/annotations: |-
     #   kubernetes.io/ingress.class: external-ingress
@@ -374,14 +383,14 @@ service:
     #   ingress.kubernetes.io/force-ssl-redirect: true
 
   ports:
-    - port: 8080
+    - port: 6875
       name: http
       protocol: TCP
-      targetPort: 8080
-  type: ClusterIP
+      targetPort: 6875
+  type: LoadBalancer
 
   # Set to 'None' will make this service headless
-  clusterIP:
+  clusterIP: None
 
 ##########################################################
 # Ingress object for exposing services
@@ -417,44 +426,7 @@ ingress:
     #     - chart-example.local
 
 ##########################################################
-# Route object for exposing services (OpenShift)
-##########################################################
-route:
-  enabled: false
-
-  # Add annotations to this Route
-  annotations:
-    # kubernetes.io/ingress.class: external-ingress
-    # ingress.kubernetes.io/rewrite-target: /
-    # ingress.kubernetes.io/force-ssl-redirect: true
-  
-  # Additional labels for this Route
-  additionalLabels:
-  
-  # If no host is added then openshift inserts the default hostname. To Add host explicitly, use host attribute
-  host:
-
-  path:
-  # Port of the service that serves pods
-  port:
-    targetPort: http
-
-  to:
-    weight: 100
-
-  wildcardPolicy: None
-
-  tls:
-    # TLS Termination strategy
-    termination: edge
-    insecureEdgeTerminationPolicy: Redirect
-
-  alternateBackends:
-    # kind: Service
-    # name: alternate-application
-    # weight: 20
-
-##########################################################
+# TODO: Eventually, use vualt for this, until then, it does nothing
 # SecretProviderClass
 ##########################################################
 secretProviderClass:
@@ -479,29 +451,16 @@ secretProviderClass:
     #  type: Opaque
 
 ##########################################################
-# Expose Application on Forecastle Dashboard
-# https://github.com/stakater/Forecastle
+# Traefik Ingress Route
 ##########################################################
-forecastle:
-  enabled: false
+ingressRoute:
+  enabled: true
+  # subDomain: bookstack # default to ApplicationName 
+  annotations: {}
+  port:
 
-  # Add additional labels on Forecastle Custom Resource
-  additionalLabels:
 
-  # URL of the icon for the custom app
-  icon: https://raw.githubusercontent.com/stakater/ForecastleIcons/master/stakater-big.png
-  
-  # Name of the application to be displayed on the Forecastle Dashboard
-  displayName: "application"
-  
-  # Group for the custom app (default: .Release.Namespace)
-  group: ""
 
-  # Add properties to Custom Resource
-  properties:
-
-  # Whether app is network restricted or not
-  networkRestricted: false
 
 ##########################################################
 # Role Based Access Control (RBAC)
@@ -560,7 +519,7 @@ configMap:
   #     key2: value2
 
 ##########################################################
-# SealedSecrets
+# SealedSecrets # TODO: Impelent sealed secrets
 ##########################################################
 sealedSecret:
   enabled: false
