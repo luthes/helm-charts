@@ -17,12 +17,12 @@ spec:
       kind: Rule
       services:
         - name: {{ .Values.applicationName}}
-          port: {{ .Values.service.port }}
+          port: {{ index .Values.service.ports 0 "port" }}
     - match: Host(`{{ .Values.applicationName }}.local.lutherlabs.com`)
       kind: Rule
       services:
         - name: {{ .Values.applicationName }}
-          port: {{ index .Values.service.ports 1 "port" }}
+          port: {{ index .Values.service.ports 0 "port" }}
       middlewares:
         - name: default-headers
           namespace: traefik
