@@ -1,3 +1,4 @@
+nameOverride: "bookstack"
 # -- Same as nameOverride but for the namespace.
 namespaceOverride: ""
 
@@ -456,11 +457,6 @@ secretProviderClass:
 ingressRoute:
   enabled: true
   # subDomain: bookstack # default to ApplicationName 
-  annotations: {}
-  port:
-
-
-
 
 ##########################################################
 # Role Based Access Control (RBAC)

@@ -13,7 +13,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`www.{{ .Values.applicatonName }}.local.lutherlabs.com`)
+    - match: Host(`www.{{ .Values.applicationName }}.local.lutherlabs.com`)
       kind: Rule
       services:
         - name: {{ .Values.applicationName}}
