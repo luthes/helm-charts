@@ -7,6 +7,6 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    {{ toYaml .Values.service.ports | indent 4}}
+{{ toYaml .Values.service.ports | indent 4 }}
   selector:
     {{- include "glob.selectorLabels" . | nindent 4 }}
