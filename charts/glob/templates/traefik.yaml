@@ -2,7 +2,7 @@
 # https://kubernetes.io/docs/concepts/services-networking/ingress/
 # This is a test service wtih example ingress and service using Traefik with SSL
 # TODO: This is using staging, make this use Production once it's set up as a copy/paste-able example!
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: {{ template "glob.name" . }}
