@@ -38,5 +38,3 @@ spec:
   volumeName: "{{ .Values.persistence.volumeName }}"
 {{- end }}
 {{- end }}
-
-
