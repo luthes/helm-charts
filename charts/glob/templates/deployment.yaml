@@ -252,7 +252,7 @@ spec:
         {{- if .Values.deployment.volumes }}
         {{- range $key, $value := .Values.deployment.volumes }}
         - name: {{ $key }}
-  {{ include "glob.tplvalues.render" ( dict "value" $value "context" $ ) | indent 8 }}
+{{ include "glob.tplvalues.render" ( dict "value" $value "context" $ ) | indent 8 }}
           {{- end }}
           {{- end }}
       {{- end }}
