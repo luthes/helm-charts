@@ -74,6 +74,6 @@ Create the name of the service account to use
   {{- if typeIs "string" .value -}}
     {{- tpl .value .context}}
   {{- else }}
-    {{- (.value | toYaml) | nindent 2 }}
+    {{- tpl (.value | toYaml) .context }}
   {{- end -}}
 {{- end -}}
