@@ -238,6 +238,29 @@ spec:
 {{  include "glob.tplvalues.render" ( dict "value" $value "context" $ ) | indent 10 }}
         {{- end }}
         {{- end }}
+            {{- if or (.Values.deployment.openshiftOAuthProxy.enabled) (.Values.deployment.volumes) (and (eq .Values.persistence.enabled true) (eq .Values.persistence.mountPVC true) )}}
+      volumes:
+        {{- if .Values.deployment.openshiftOAuthProxy.enabled }}
+      - name: proxy-tls
+        secret:
+          secretName: {{ .Values.deployment.openshiftOAuthProxy.secretName }}
+        {{- end }}
+        {{- if (eq .Values.persistence.mountPVC true) }}
+      - name: {{ template "application.name" . }}-data
+        persistentVolumeClaim:
+          {{- if .Values.persistence.name }}
+          claimName: {{ .Values.persistence.name }}
+          {{- else }}
+          claimName: {{ template "application.name" . }}-data
+          {{- end }}
+        {{- end }}
+        {{- if .Values.deployment.volumes }}
+        {{- range $key, $value := .Values.deployment.volumes }}
+      - name: {{ $key }}
+{{ include "application.tplvalues.render" ( dict "value" $value "context" $ ) | indent 8 }}
+        {{- end }}
+        {{- end }}
+      {{- end }}
       {{- end }}
         {{- with .Values.deployment.resources }}
         resources:
