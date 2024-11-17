@@ -238,22 +238,6 @@ spec:
 {{  include "glob.tplvalues.render" ( dict "value" $value "context" $ ) | indent 10 }}
         {{- end }}
         {{- end }}
-      {{- if or (.Values.deployment.volumes) (and (eq .Values.persistence.enabled true) (eq .Values.persistence.mountPVC true) )}}
-        volumes:
-        {{- if (eq .Values.persistence.mountPVC true) }}
-        - name: {{ template "glob.name" . }}-data
-          persistentVolumeClaim:
-            {{- if .Values.persistence.name }}
-            claimName: {{ .Values.persistence.name }}
-            {{- else }}
-            claimName: {{ template "glob.name" . }}-data
-            {{- end }}
-          {{- end }}
-          {{- if .Values.deployment.volumes }}
-{{ toYaml .Values.deployment.volumes | indent 10 }}
-          {{- end }}
-      {{- end }}
-      {{- end }}
         {{- with .Values.deployment.resources }}
         resources:
           {{- toYaml . | nindent 10 }}
@@ -284,4 +268,20 @@ spec:
       hostNetwork: {{ .Values.deployment.hostNetwork }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.deployment.terminationGracePeriodSeconds }}
+      {{- if or (.Values.deployment.volumes) (and (eq .Values.persistence.enabled true) (eq .Values.persistence.mountPVC true) )}}
+      volumes:
+        {{- if (eq .Values.persistence.mountPVC true) }}
+        - name: {{ template "glob.name" . }}-data
+          persistentVolumeClaim:
+            {{- if .Values.persistence.name }}
+            claimName: {{ .Values.persistence.name }}
+            {{- else }}
+            claimName: {{ template "glob.name" . }}-data
+            {{- end }}
+          {{- end }}
+          {{- if .Values.deployment.volumes }}
+{{ toYaml .Values.deployment.volumes | indent 6 }}
+          {{- end }}
+      {{- end }}
+      {{- end }}
 {{- end }}

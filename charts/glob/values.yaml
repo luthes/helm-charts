@@ -183,20 +183,20 @@ deployment:
     #        configMapKeyRef:
     #           name: config
     #           key: frequency
-  
-    # Volumes to be added to the pod
-    # volumeMounts:
-    #   bookstack-secure-data:
-    #      mountPath: /secure-data/
-    #   bookstack-public-data:
-    #      mountPath: /public-data/
-    # volumes:
-    #   - name: bookstack-secure-data
-    #     persistentVolumeClaim:
-    #       claimName: bookstack-secure-data
-    #   - name: bookstack-public-data
-    #     persistentVolumeClaim:
-    #       claimName: bookstack-public-datasomethingsomething
+
+  # Volumes to be added to the pod
+  volumeMounts:
+    bookstack-secure-data:
+       mountPath: /secure-data/
+    bookstack-public-data:
+       mountPath: /public-data/
+  volumes:
+    - name: bookstack-secure-data
+      persistentVolumeClaim:
+        claimName: bookstack-secure-data
+    - name: bookstack-public-data
+      persistentVolumeClaim:
+        claimName: bookstack-public-datasomethingsomething
 
   # priorityClassName defines the priority class for pod scheduling
   priorityClassName: ''
