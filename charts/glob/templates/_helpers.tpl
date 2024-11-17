@@ -73,7 +73,7 @@ Create the name of the service account to use
 {{- define "glob.tplvalues.render" -}}
   {{- if typeIs "string" .value -}}
     {{- tpl .value .context}}
-  {{- else }}
-    {{- (.value | toYaml ) | nindent 2 }}
-  {{- end }}
+  {{ else }}
+    {{- tpl (.value | toYaml ) .context }}
+  {{- end -}}
 {{- end -}}

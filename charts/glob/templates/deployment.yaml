@@ -235,7 +235,6 @@ spec:
         {{- if .Values.deployment.volumeMounts }}
         {{- range $key, $value := .Values.deployment.volumeMounts }}
         - name: {{ $key }}
-          value: value
 {{  include "glob.tplvalues.render" ( dict "value" $value "context" $ ) | indent 10 }}
         {{- end }}
         {{- end }}
@@ -251,10 +250,7 @@ spec:
             {{- end }}
           {{- end }}
           {{- if .Values.deployment.volumes }}
-          {{- range $key, $value := .Values.deployment.volumes }}
-        - name: {{ $key -}}
-  {{ include "glob.tplvalues.render" ( dict "value" $value "context" $ ) | indent 8 }}
-          {{- end }}
+{{ toYaml .Values.deployment.volumes | indent 10 }}
           {{- end }}
       {{- end }}
       {{- end }}
