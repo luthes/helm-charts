@@ -241,12 +241,12 @@ spec:
       {{- if or (.Values.deployment.volumes) (and (eq .Values.persistence.enabled true) (eq .Values.persistence.mountPVC true) )}}
         volumes:
         {{- if (eq .Values.persistence.mountPVC true) }}
-        - name: {{ template "application.name" . }}-data
+        - name: {{ template "glob.name" . }}-data
           persistentVolumeClaim:
             {{- if .Values.persistence.name }}
             claimName: {{ .Values.persistence.name }}
             {{- else }}
-            claimName: {{ template "application.name" . }}-data
+            claimName: {{ template "glob.name" . }}-data
             {{- end }}
           {{- end }}
           {{- if .Values.deployment.volumes }}
