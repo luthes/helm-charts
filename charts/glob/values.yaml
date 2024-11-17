@@ -70,7 +70,6 @@ job:
 # Deployment
 ##########################################################
 deployment:
-
   enabled: true
   # By default deploymentStrategy is set to rollingUpdate with maxSurge of 25% and maxUnavailable of 25%
   # You can change type to `Recreate` or can uncomment `rollingUpdate` specification and adjust them to your usage.
@@ -156,39 +155,48 @@ deployment:
        value: "bookstack"
     DB_DATABASE:
        value: "bookstack"
+    APP_URL:
+      value: "https://bookstack.local.lutherlabs.com"
+    PUID:
+      value: "1000"
+    PGID:
+      value: "1000"
+    TZ:
+      value: "America/Los_Angeles"
+    # STORAGE_TYPE:
+    #   value: "s3"
+    # STORAGE_S3_KEY:
+    #   value: "bookstack"
+    # STORAGE_S3_SECRET:
+    #   value: "bookstack"
+    # STORAGE_S3_BUCKET:
+    #   value: "bookstack"
     # FREQUENCY:
     #    valueFrom:
     #       configMapKeyRef:
     #          name: config
     #          key: frequency
-  #  ENVIRONMENT:
-  #     value: "dev"
-  #  FREQUENCY:
-  #     valueFrom:
-  #        configMapKeyRef:
-  #           name: config
-  #           key: frequency
+    #  ENVIRONMENT:
+    #     value: "dev"
+    #  FREQUENCY:
+    #     valueFrom:
+    #        configMapKeyRef:
+    #           name: config
+    #           key: frequency
   
-  # Volumes to be added to the pod
-  volumes:
-    # configmap-volume:
-    #   configMap:
-    #     name: '{{ template "application.name" . }}-configmap-nameSuffix'
-    # secret-volume:
-    #   secret:
-    #     secretName: secret-name
-    # persistent-volume-name:
-    #   persistentVolumeClaim:
-    #     claimName: claim-name
-
-  # Mount path for Volumes
-  volumeMounts:
-    # volume-name:
-    #    mountPath: path
-    #    subPath: szy
-
-    # volume-name-2:
-    #    mountPath: path-2
+    # Volumes to be added to the pod
+    # volumeMounts:
+    #   bookstack-secure-data:
+    #      mountPath: /secure-data/
+    #   bookstack-public-data:
+    #      mountPath: /public-data/
+    # volumes:
+    #   - name: bookstack-secure-data
+    #     persistentVolumeClaim:
+    #       claimName: bookstack-secure-data
+    #   - name: bookstack-public-data
+    #     persistentVolumeClaim:
+    #       claimName: bookstack-public-datasomethingsomething
 
   # priorityClassName defines the priority class for pod scheduling
   priorityClassName: ''
@@ -285,11 +293,11 @@ deployment:
   # Resources to be defined for pod
   resources:
     limits:
-      memory: 256Mi
-      cpu: 0.5
+      memory: 8192Mi
+      cpu: 8
     requests:
-      memory: 128Mi
-      cpu: 0.1
+      memory: 4096Mi
+      cpu: 4
 
   #  Security Context at Container Level
   containerSecurityContext:
@@ -315,7 +323,7 @@ deployment:
 
   # List of ports for the primary container
   ports:
-  - containerPort: 6875
+  - containerPort: 80
     name: http
     protocol: TCP
   #- containerPort: 8778
@@ -344,21 +352,21 @@ deployment:
 persistence:
   enabled: false
   mountPVC: false
-  mountPath: "/"
+  mountPath: "/pv"
   name: ""
-  accessMode: ReadWriteOnce
+  accessMode: ReadWriteMany
   ## If defined, storageClass: <storageClass>
   ## If set to "-", storageClass: "", which disables dynamic provisioning
   ## If undefined (the default) or set to null, no storageClass spec is
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "-"
+  storageClass: "longhorn"
   additionalLabels:
     # key: "value"
   annotations:
   #  "helm.sh/resource-policy": keep
-  storageSize: 8Gi
+  storageSize: 30Gi
   volumeMode: ""
   volumeName: ""
 
@@ -384,10 +392,10 @@ service:
     #   ingress.kubernetes.io/force-ssl-redirect: true
 
   ports:
-    - port: 6875
+    - port: 80
       name: http
       protocol: TCP
-      targetPort: 6875
+      targetPort: http
   type: LoadBalancer
 
   # Set to 'None' will make this service headless
