@@ -238,13 +238,8 @@ spec:
 {{  include "glob.tplvalues.render" ( dict "value" $value "context" $ ) | indent 10 }}
         {{- end }}
         {{- end }}
-      {{- if or (.Values.deployment.openshiftOAuthProxy.enabled) (.Values.deployment.volumes) (and (eq .Values.persistence.enabled true) (eq .Values.persistence.mountPVC true) )}}
+      {{- if or (.Values.deployment.volumes) (and (eq .Values.persistence.enabled true) (eq .Values.persistence.mountPVC true) )}}
       volumes:
-        {{- if .Values.deployment.openshiftOAuthProxy.enabled }}
-      - name: proxy-tls
-        secret:
-          secretName: {{ .Values.deployment.openshiftOAuthProxy.secretName }}
-        {{- end }}
         {{- if (eq .Values.persistence.mountPVC true) }}
       - name: {{ template "application.name" . }}-data
         persistentVolumeClaim:
