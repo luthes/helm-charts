@@ -95,54 +95,54 @@ spec:
           {{- end }}
           # Foundry fetch files only
           - name: FOUNDRY_USERNAME
-            {{- if .Values.foundryvtt.username.useSecret -}}
+            {{- if .Values.foundryvtt.username.useSecret }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.foundryvtt.username.secretName }}
                 key: {{ .Values.foundryvtt.username.secretKey }}
             {{- else }}
             value: {{ .Values.foundryvtt.username | quote }}
-            {{- end -}}
+            {{- end }}
           - name: FOUNDRY_PASSWORD
-            {{- if .Values.foundryvtt.password.useSecret -}}
+            {{- if .Values.foundryvtt.password.useSecret }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.foundryvtt.password.secretName }}
                 key: {{ .Values.foundryvtt.password.secretKey }}
             {{- else }}
             value: {{ .Values.foundryvtt.password | quote }}
-            {{- end -}}
+            {{- end }}
           - name: FOUNDRY_RELEASE_URL
-            {{- if .Values.foundryvtt.releaseUrl.useSecret -}}
+            {{- if .Values.foundryvtt.releaseUrl.useSecret }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.foundryvtt.releaseUrl.secretName }}
                 key: {{ .Values.foundryvtt.releaseUrl.secretKey }}
             {{- else }}
             value: {{ .Values.foundryvtt.releaseUrl | quote }}
-            {{- end -}}
+            {{- end }}
           - name: FOUNDRY_ADMIN_KEY
-            {{- if .Values.foundryvtt.adminPassword.useSecret -}}
+            {{- if .Values.foundryvtt.adminPassword.useSecret }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.foundryvtt.adminPassword.secretName }}
                 key: {{ .Values.foundryvtt.adminPassword.secretKey }}
             {{- else }}
             value: {{ .Values.foundryvtt.adminPassword | quote }}
-          {{- end -}}
+            {{- end }}
           {{- if .Values.foundryvtt.language }}
           - name: FOUNDRY_LANGUAGE
             value: {{ .Values.foundryvtt.language }}
           {{- end }}
           - name: FOUNDRY_LICENSE_KEY
-            {{- if .Values.foundryvtt.licenseKey.useSecret -}}
+            {{- if .Values.foundryvtt.licenseKey.useSecret }}
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.foundryvtt.licenseKey.secretName }}
                 key: {{ .Values.foundryvtt.licenseKey.secretKey }}
             {{- else }}
             value: {{ .Values.foundryvtt.licenseKey | quote }}
-            {{- end -}}
+            {{- end }}
           {{- if .Values.foundryvtt.minifyStaticFiles }}
           - name: FOUNDRY_MINIFY_STATIC_FILES
             value: {{ .Values.foundryvtt.minifyStaticFiles | quote }}
