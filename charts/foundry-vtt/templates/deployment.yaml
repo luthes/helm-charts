@@ -112,6 +112,7 @@ spec:
             {{- else }}
             value: {{ .Values.foundryvtt.password | quote }}
             {{- end }}
+          {{ if .Values.foundryvtt.releaseUrl }}
           - name: FOUNDRY_RELEASE_URL
             {{- if .Values.foundryvtt.releaseUrl.useSecret }}
             valueFrom:
@@ -120,6 +121,7 @@ spec:
                 key: {{ .Values.foundryvtt.releaseUrl.secretKey }}
             {{- else }}
             value: {{ .Values.foundryvtt.releaseUrl | quote }}
+            {{- end }}
             {{- end }}
           - name: FOUNDRY_ADMIN_KEY
             {{- if .Values.foundryvtt.adminPassword.useSecret }}
