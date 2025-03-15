@@ -216,35 +216,35 @@ foundryvtt:
   ## Account username or email address for foundryvtt.com. Required for downloading an application distribution.
   # username: ""
   username:
-    useSecret: true
+    useSecret: false
     secretName: somesecret
     secretKey: somevalue
 
   ## Account password for foundryvtt.com. Required for downloading an application distribution.
   # password: password_here
   password:
-    useSecret: true
+    useSecret: false
     secretName: somesecret
     secretKey: somevalue
 
   ##  S3 pre-signed URL generate from the user's profile.  Required for downloading an application distribution.
   # releaseUrl: ""
   releaseUrl:
-    useSecret: true
+    useSecret: false
     secretName: somesecret
     secretKey: somevalue
 
   ## Admin password. Default: admin
   # adminPassword: "admin_password_here"
   adminPassword:
-    useSecret: true
+    useSecret: false
     secretName: somesecret
     secretKey: somevalue
 
   ## The license key to install. e.g.; AAAA-BBBB-CCCC-DDDD-EEEE-FFFF If left unset, a license key will be fetched when using account authentication. If multiple license keys are associated with an account, one will be chosen at random. Specific licenses can be selected by passing in an integer index. The first license key being 1.
   # licenseKey: license_key_here
   licenseKey:
-    useSecret: true
+    useSecret: false
     secretName: somesecret
     secretKey: somevalue
 
