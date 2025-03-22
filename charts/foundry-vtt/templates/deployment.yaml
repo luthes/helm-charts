@@ -42,13 +42,16 @@ spec:
           {{- if or (.Values.foundryvtt.username) (.Values.foundryvtt.releaseUrl) }}
           initialDelaySeconds: 600
           failureThreshold: 40
-          periodSeconds: 25
+          periodSeconds: 30
+          timeoutSeconds: 20
           {{- end }}
           httpGet:
             path: /
             port: http
         readinessProbe:
           initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 20
           httpGet:
             path: /
             port: http
