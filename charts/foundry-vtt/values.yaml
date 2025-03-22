@@ -37,7 +37,7 @@ serviceAccount:
 image:
   pullPolicy: IfNotPresent
   repository: felddy/foundryvtt
-  tag: "11.315"
+  tag: "12.331"
 
 ## @param imagePullSecrets Credentials for Docker private repository.
 imagePullSecrets: []
@@ -230,21 +230,21 @@ foundryvtt:
   ##  S3 pre-signed URL generate from the user's profile.  Required for downloading an application distribution.
   # releaseUrl: ""
   releaseUrl:
-    useSecret: false
+    useSecret: true
     secretName: somesecret
     secretKey: somevalue
 
   ## Admin password. Default: admin
   # adminPassword: "admin_password_here"
   adminPassword:
-    useSecret: false
+    useSecret: true
     secretName: somesecret
     secretKey: somevalue
 
   ## The license key to install. e.g.; AAAA-BBBB-CCCC-DDDD-EEEE-FFFF If left unset, a license key will be fetched when using account authentication. If multiple license keys are associated with an account, one will be chosen at random. Specific licenses can be selected by passing in an integer index. The first license key being 1.
   # licenseKey: license_key_here
   licenseKey:
-    useSecret: false
+    useSecret: true
     secretName: somesecret
     secretKey: somevalue
 
@@ -299,7 +299,7 @@ foundryvtt:
   upnp: false
 
   ## Version of Foundry VTT to install.
-  version: "11.315"
+  version: "12.331"
 
   ## The world startup at system start.
   world: ""
