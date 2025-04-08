@@ -33,7 +33,7 @@ spec:
           image: busybox
           command: ["sh", "-c"]
           args:
-            - chown -R {{ .Values.container.gid }}:{{ .Values.container.uid }} {{ .Values.container.cache }};
+            - "chown -R {{ .Values.container.gid }}:{{ .Values.container.uid }} {{ .Values.container.cache }};"
           volumeMounts:
           - name: {{ include "foundry-vtt.fullname" }}
             mountPath: {{ .Values.container.cache }}
