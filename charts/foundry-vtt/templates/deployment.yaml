@@ -28,6 +28,7 @@ spec:
       dnsConfig:
         {{- toYaml .Values.dnsConfig | nindent 8 }}
       {{- end }}
+      # TODO: This may not be needed, or may be.. 13.339 has some issues
       initContainers:
         - name: {{ .Chart.Name }}-volume-permissions
           image: busybox
