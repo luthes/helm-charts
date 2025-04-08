@@ -28,6 +28,15 @@ spec:
       dnsConfig:
         {{- toYaml .Values.dnsConfig | nindent 8 }}
       {{- end }}
+      initContainers:
+      - name: {{ .Chart.Name }}-volume-permissions
+        image: busybox
+        command: ["sh", "-c"]
+        args:
+          - chown -R {{ .Values.container.gid }}:{{ .Values.container.uid }} {{ .Values.container.cache }};
+        volumeMounts:
+        - name: {{ include "foundry-vtt.fullname" }}
+          mountPath: {{ .Values.container.cache }}
       containers:
       - name: {{ .Chart.Name }}
         securityContext:
