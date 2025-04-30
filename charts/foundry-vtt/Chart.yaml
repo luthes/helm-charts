@@ -13,7 +13,9 @@ keywords:
   - foundryvtt
   - foundry
 sources:
-  - https://github.com/hugoprudente/charts/tree/main/incubator/foundry-vtt
+  - https://github.com/luthes/helm-charts/tree/main/charts/foundry-vtt
 maintainers:
+  - name: stevenluther
+    email: steven@lutherlabs.com
   - name: hugoprudente
     email: hugo.kenshin@gmail.com
