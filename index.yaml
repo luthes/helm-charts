@@ -2,6 +2,29 @@ apiVersion: v1
 entries:
   foundry-vtt:
   - apiVersion: v2
+    appVersion: v13.341
+    created: "2025-04-30T18:18:27.840964286Z"
+    description: Foundry Virtual Tabletop
+    digest: a7d3405ec5f4e0490ae9e9d9c0dd0d1482d509910e14ba9d8a57e70e26c01ba8
+    icon: https://artifacthub.io/image/3e8ce5cf-7afe-4032-bae2-500b17e64b11@1x
+    keywords:
+    - game
+    - server
+    - vtt
+    - virtualtabletop
+    - foundryvtt
+    - foundry
+    maintainers:
+    - email: hugo.kenshin@gmail.com
+      name: hugoprudente
+    name: foundry-vtt
+    sources:
+    - https://github.com/hugoprudente/charts/tree/main/incubator/foundry-vtt
+    type: application
+    urls:
+    - https://github.com/luthes/helm-charts/releases/download/foundry-vtt-13.341/foundry-vtt-13.341.tgz
+    version: "13.341"
+  - apiVersion: v2
     appVersion: v13.339
     created: "2025-04-07T22:32:46.84687643Z"
     description: Foundry Virtual Tabletop
@@ -401,4 +424,4 @@ entries:
     urls:
     - https://github.com/luthes/helm-charts/releases/download/glob-0.1.2/glob-0.1.2.tgz
     version: 0.1.2
-generated: "2025-04-07T22:32:46.846971366Z"
+generated: "2025-04-30T18:18:27.841060815Z"
