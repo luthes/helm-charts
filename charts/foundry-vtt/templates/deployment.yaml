@@ -36,7 +36,7 @@ spec:
           args:
             - "chown -R {{ .Values.container.gid }}:{{ .Values.container.uid }} {{ .Values.container.cache }};"
           volumeMounts:
-          - name: {{ include "foundry-vtt.fullname" }}
+          - name: {{ include "foundry-vtt.fullname" . }}
             mountPath: {{ .Values.container.cache }}
       containers:
       - name: {{ .Chart.Name }}

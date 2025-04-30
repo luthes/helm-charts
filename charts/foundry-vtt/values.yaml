@@ -12,7 +12,7 @@
 ## @param serviceAccount.annotations Extra annotations to add to the ServiceAccount
 ## @param serviceAccount.name Name of the Service Account
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "test"
 dnsPolicy: "ClusterFirst"
 dnsConfig:
   # nameservers:
@@ -28,7 +28,7 @@ serviceAccount:
     # "eks.amazonaws.com/role-arn": "arn:aws:iam::ACCOUNTID:role/ROLE"
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name:
+  name: test
 
 ## @section Image Parameters
 ## @param image.pullPolicy pullPolicy for the Image
@@ -37,7 +37,7 @@ serviceAccount:
 image:
   pullPolicy: IfNotPresent
   repository: felddy/foundryvtt
-  tag: "13.339"
+  tag: "13.341"
 
 ## @param imagePullSecrets Credentials for Docker private repository.
 imagePullSecrets: []
@@ -216,7 +216,7 @@ foundryvtt:
   ## Account username or email address for foundryvtt.com. Required for downloading an application distribution.
   # username: ""
   username:
-    useSecret: false
+    useSecret: true
     secretName: somesecret
     secretKey: somevalue
 
@@ -299,7 +299,7 @@ foundryvtt:
   upnp: false
 
   ## Version of Foundry VTT to install.
-  version: "13.339"
+  version: "13.341"
 
   ## The world startup at system start.
   world: ""
