@@ -67,13 +67,15 @@ resources:
 ## @param affinity Pod Affinity
 podSecurityContext: {}
   # fsGroup: 2000
-securityContext: {}
+securityContext:
   # capabilities:
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 421
+  runAsUser: 421
+  runAsGroup: 421
+  fsGroup: 421
 nodeSelector: {}
 tolerations: []
 affinity: {}
