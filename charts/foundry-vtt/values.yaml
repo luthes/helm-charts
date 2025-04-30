@@ -317,7 +317,7 @@ foundryvtt:
 ## @param ingress.tls.source the source of your signed certification, allowed {}, external, secret, or letsEncrypt
 ## @param ingress.configurationSnippet Extra NGINX Configuration to add as Annotation
 ingress:
-  # options: nginx, contour
+  # options: nginx, contour, traefik
   class: nginx
   hostname: foundry.domain.com
   enabled: false
