@@ -12,7 +12,7 @@
 ## @param serviceAccount.annotations Extra annotations to add to the ServiceAccount
 ## @param serviceAccount.name Name of the Service Account
 nameOverride: ""
-fullnameOverride: "test"
+fullnameOverride: ""
 dnsPolicy: "ClusterFirst"
 dnsConfig:
   # nameservers:
@@ -28,7 +28,7 @@ serviceAccount:
     # "eks.amazonaws.com/role-arn": "arn:aws:iam::ACCOUNTID:role/ROLE"
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: test
+  name:
 
 ## @section Image Parameters
 ## @param image.pullPolicy pullPolicy for the Image
