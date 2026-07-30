@@ -26,7 +26,7 @@ cronJob:
     # db-migration:
     #   schedule: "* * * 8 *"
     #   priorityClassName: high-priority
-    #   env: 
+    #   env:
     #     KEY:
     #       value: VALUE
     #   image:
@@ -41,7 +41,6 @@ cronJob:
     #         memory: 5Gi
     #         cpu: 1
 
-
 job:
   enabled: false
   jobs:
@@ -50,21 +49,20 @@ job:
     #     helm.sh/hook: "pre-install,pre-upgrade"
     #     helm.sh/hook-weight: "-1"
     #     helm.sh/hook-delete-policy: "before-hook-creation"
-    #   env: 
+    #   env:
     #     KEY:
     #       value: VALUE
-    #   image: 
+    #   image:
     #     repository: docker.io/nginx
     #     tag: v1.0.0
     #     digest: '' # if set to a non empty value, digest takes precedence on the tag
     #     imagePullPolicy: IfNotPresent
     #   command: ["/bin/bash"]
     #   args: ["-c","sleep 5000"]
-    #   resources:  
+    #   resources:
     #     requests:
     #         memory: 5Gi
     #         cpu: 1
-  
 
 ##########################################################
 # Deployment
@@ -78,7 +76,7 @@ deployment:
     # rollingUpdate:
     #   maxSurge: 25%
     #   maxUnavailable: 25%
-  
+
   # Reload deployment if configMap/secret updates
   reloadOnChange: true
 
@@ -146,15 +144,15 @@ deployment:
   # Environment variables to be passed to the app container
   env:
     DB_HOST:
-       value: "192.168.8.116"
+      value: "192.168.8.116"
     DB_PORT:
-       value: "3306"
+      value: "3306"
     DB_USER:
-       value: "bookstack"
+      value: "bookstack"
     DB_PASS:
-       value: "bookstack"
+      value: "bookstack"
     DB_DATABASE:
-       value: "bookstack"
+      value: "bookstack"
     APP_URL:
       value: "https://bookstack.local.lutherlabs.com"
     PUID:
@@ -187,9 +185,9 @@ deployment:
   # Volumes to be added to the pod
   volumeMounts:
     bookstack-secure-data:
-       mountPath: /secure-data/
+      mountPath: /secure-data/
     bookstack-public-data:
-       mountPath: /public-data/
+      mountPath: /public-data/
   volumes:
     - name: bookstack-secure-data
       persistentVolumeClaim:
@@ -199,7 +197,7 @@ deployment:
         claimName: bookstack-public-datasomethingsomething
 
   # priorityClassName defines the priority class for pod scheduling
-  priorityClassName: ''
+  priorityClassName: ""
 
   # Taint tolerations for nodes
   tolerations:
@@ -246,7 +244,7 @@ deployment:
   # Image of the app container
   image:
     repository: lscr.io/linuxserver/bookstack
-    tag: 'latest' # TODO: Pin to a verison
+    tag: "latest" # TODO: Pin to a verison
     # digest: '' # if set to a non empty value, digest takes precedence on the tag
     pullPolicy: IfNotPresent
   dnsConfig:
@@ -323,9 +321,9 @@ deployment:
 
   # List of ports for the primary container
   ports:
-  - containerPort: 80
-    name: http
-    protocol: TCP
+    - containerPort: 80
+      name: http
+      protocol: TCP
   #- containerPort: 8778
   #  name: jolokia
   #  protocol: TCP
@@ -340,7 +338,8 @@ deployment:
   terminationGracePeriodSeconds:
 
   # Default lifecycle configuration
-  lifecycle: {}
+  lifecycle:
+    {}
     # Example for a preStop hook:
     # preStop:
     #   exec:
@@ -369,7 +368,6 @@ persistence:
   storageSize: 30Gi
   volumeMode: ""
   volumeName: ""
-
 
 ##########################################################
 # Service object for servicing pods
@@ -408,13 +406,13 @@ ingress:
   enabled: false
 
   # Name of the ingress class
-  ingressClassName: ''
+  ingressClassName: ""
 
   # List of host addresses to be exposed by this Ingress
   hosts:
     - host: chart-example.local
       paths:
-      - path: /
+        - path: /
       #  pathType: ''
       #  serviceName: ''
       #  servicePort: ''
@@ -448,7 +446,7 @@ secretProviderClass:
   # vaultAddress: http://vault:8200
   roleName: ""
   # roleName: example-role
-  objects: 
+  objects:
     #- objectName: MONGO_HOST
     #  secretPath: testing/data/mongoDb
     #  secretKey: MONGO_HOST
@@ -464,7 +462,7 @@ secretProviderClass:
 ##########################################################
 ingressRoute:
   enabled: true
-  # subDomain: bookstack # default to ApplicationName 
+  # subDomain: bookstack # default to ApplicationName
 
 ##########################################################
 # Role Based Access Control (RBAC)
@@ -481,7 +479,7 @@ rbac:
     additionalLabels:
       # key: value
 
-    # Annotations on service account 
+    # Annotations on service account
     annotations:
       # key: value
 
@@ -589,10 +587,9 @@ serviceMonitor:
 
   # List of the endpoints of service from which prometheus will scrape data
   endpoints:
-  - interval: 5s
-    path: /actuator/prometheus
-    port: http
-
+    - interval: 5s
+      path: /actuator/prometheus
+      port: http
 
 ##########################################################
 # PrometheusRule object for defining application
@@ -608,7 +605,8 @@ prometheusRule:
 
   # Groups with alerting rules. Read more here [https://docs.openshift.com/container-platform/4.7/rest_api/monitoring_apis/prometheusrule-monitoring-coreos-com-v1.html]
 
-  groups: []
+  groups:
+    []
     # - name: example-app-uptime
     #   rules:
     #     - alert: ExampleAppDown
@@ -629,7 +627,7 @@ externalSecret:
   # Default SecretStore for all externalsecrets defines which SecretStore to use when fetching the secret data
   secretStore:
     name: tenant-vault-secret-store
-    #kind: ClusterSecretStore # Defaults to SecretStore if not specified 
+    #kind: ClusterSecretStore # Defaults to SecretStore if not specified
 
   # RefreshInterval is the amount of time before the values reading again from the SecretStore provider
   refreshInterval: "1m"
@@ -638,18 +636,18 @@ externalSecret:
     # # Data defines the connection between the Kubernetes Secret keys and the Provider data
     #   data:
     #      mongo-password:
-    #        remoteRef: 
+    #        remoteRef:
     #           key: monodb
     #           property: passowrd
     #   secretStore:
     #      name: secret-store-name-2    # specify if value is other than default secretstore
     #   labels:
-    #      stakater.com/app: mongodb 
+    #      stakater.com/app: mongodb
     #   #
     # postgres:
-      ## Used to fetch all properties from the Provider key
-      #   dataFrom:
-      #     key: postgres
+    ## Used to fetch all properties from the Provider key
+    #   dataFrom:
+    #     key: postgres
 
 ##########################################################
 # grafanaDashboard object for defining application
@@ -682,7 +680,7 @@ grafanaDashboard:
     #       "data"
     #     }
     #   url: http://hostname/path/to/file.json
-    
+
     # dashboard-test-name-2:
     #   allowCrossNamespaceImport: true
     #   configMapRef:
