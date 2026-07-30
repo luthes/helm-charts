@@ -2,7 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-
 ## @section Common Parameters
 ## @param nameOverride Name Override
 ## @param fullnameOverride FullName Override
@@ -301,7 +300,7 @@ foundryvtt:
   upnp: false
 
   ## Version of Foundry VTT to install.
-  version: "13.350"
+  version: "14.365"
 
   ## The world startup at system start.
   world: ""
@@ -323,8 +322,7 @@ ingress:
   enabled: false
   path: "/"
   pathType: Prefix
-  annotations:
-    {}
+  annotations: {}
     ## E.g.
     # nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
     # nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
